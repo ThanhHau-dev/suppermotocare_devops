@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="/3rd/bootstrap-icons-1.11.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="/css/app.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="app">
+
+        <div class="nav-main">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <div class="container">
+                    <a class="navbar-brand" href="/">
+                        supper <span style="color: yellow; font-size: 50px; font-weight: bold;">Mottocare</span>
+                    </a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse"
+                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                        aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+    
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav mr-auto">
+                            <li class="nav-item dropdown">
+                                <div class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Danh mục sản phẩm
+                                </div>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="purchase?type=nhot">Nhớt & dung dịch</a>
+                                    <a class="dropdown-item" href="purchase?type=dts">Đồ chơi xe</a>
+                                    <a class="dropdown-item" href="purchase?type=balo">Phụ kiện</a>
+                                </div>
+                            </li>
+    
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Liên hệ</a>
+                            </li>
+                        </ul>
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul class="navbar-nav ml-auto">
+                                <form class="form-inline my-2 my-lg-0 ml-auto" action="/search" method="post">
+                                    <input class="form-control mr-sm-2" type="search" placeholder="Search"
+                                        name="search_product" aria-label="Search">
+                                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                                </form>
+                                <div class="dropdown">
+                                    <% if (!user) { %>
+                                        <div >
+                                            <a class="dropdown-item btn btn-outline-success" role="button" href="/account/login">
+                                                <button class="btn btn-warning ml-2">login</button>
+                                            </a>
+                                        </div>
+                                    <% } else { %>
+                                        <% if (user.admin) {%>
+                                        <div class="dropdown">
+                                            <li class="nav-item dropdown">
+                                              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                                                aria-haspopup="true" aria-expanded="false">
+                                                Hi, <%= user.username  %>
+                                              </a>
+                                              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                                <div id="author">
+                                                  <a class="dropdown-item" href="/product/create">Create</a>
+                                                  <a class="dropdown-item" href="/me/stored/product">My Product</a>
+                                                </div>
+                                                <div class="dropdown-divider"></div>
+                                                <a class="dropdown-item" href="/account/logout">Log out</a>
+                                              </div>
+                                            </li>
+                                          </div>
+                                         <% } else { %>
+                                            <li class="nav-item dropdown">
+                                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    Hi, <%= user.username %>
+                                                </a>
+                                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                                    <div id="author">
+                                                        <a class="dropdown-item" href="/purchase/cart">Cart</a>
+                                                    </div>
+                                                    <div class="dropdown-divider"></div>
+                                                    <a class="dropdown-item" href="/account/logout">Log out</a>
+                                                </div>
+                                            </li>
+                                        <% } %>
+                                    <% } %>
+                                </div>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+
+        <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img class="d-block w-100"
+                        src="https://vtv1.mediacdn.vn/zoom/640_400/2019/12/22/photo-1-15769999484901663361149.jpg"
+                        alt="First slide">
+                </div>
+                <div class="carousel-item">
+                    <img class="d-block w-100"
+                        src="https://www.revzoneyamaha-motor.com.vn/wp-content/uploads/2022/03/proevekoert-2020-yamaha-yzf-r1-amp-yzf-r1m-paa-jerez-img-2400_10436_66_1569488117-1.jpeg"
+                        alt="Second slide">
+                </div>
+                <div class="carousel-item">
+                    <img class="d-block w-100"
+                        src="https://www.lv8.it/storage/articles/598_phpSN5Y6E_1675083406.webp"
+                        alt="Third slide">
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th colspan="4">
+                            <h2>SẢN PHẨM NỔI BẬT</h2>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>z
+
+                    <tr>
+                        <% var count=1; %>
+                            <% results.forEach(element=> { %>
+                                <td>
+                                    <div class="card" style="width: 16rem;">
+                                        <img class="card-img-top" src="<%= element.img %>" alt="Card image cap">
+                                        <div class="card-body">
+                                            <h5 class="card-title">
+                                                <%= element.name %>
+                                            </h5>
+                                            <p class="card-text">
+                                                <%= element.destributed %>
+                                            </p>
+                                            <h5 class="card-title fw-bold">
+                                                <%= element.price %> VND
+                                            </h5>
+                                            <a href="purchase/<%= element._id %>" class="btn btn-primary">Mua</a>
+                                        </div>
+                                    </div>
+                                    <% if (count%4===0) { %>
+                                </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <% } else { %>
+                        </td>
+                        <%} count++ }); %>
+                </tbody>
+            </table>
+            <section>
+                <div class="main">
+                    <div class="container">
+                        <!-- <h2>SẢN PHẨM NỔI BẬT</h2> -->
+                        <div class="row">
+
+                        </div>
+                    </div>
+
+                    <div class="bg">
+                        <img
+                            src="https://www.quadlockcase.com/cdn/shop/articles/6aa56b97284cf7965bd701098c0d10d5454dd6a1-1600x600.jpg?v=1669594836">
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <div class="main2">
+                    <div class="container">
+                        <h2 class="fw-bold mt-4">Đồ chơi xe</h2>
+                        <div class="row">
+                            <% results.forEach(element=> { %>
+                                <div class="col-sm-3">
+                                   
+                                        <div class="card" style="width: 18rem;">
+                                            <img class="card-img-top" src="<%= element.img %>" alt="Card image cap">
+                                            <div class="card-body">
+                                                <h5 class="card-title">
+                                                    <%= element.name %>
+                                                </h5>
+                                                <p class="card-text">
+                                                    <%= element.destributed %>
+                                                </p>
+                                                <h5 class="card-title fw-bold">
+                                                    <%= element.price %> VND
+                                                </h5>
+                                                <a href="purchase/{{ this._id }}" class="btn btn-primary">Mua</a>
+                                            </div>
+                                        </div>
+                                       
+                                </div>
+                                <% }); %>
+                            </div>
+
+                            <!-- <div class="col-sm-4">
+                                <img id="click-here"
+                                    src="https://fptshop.com.vn/Uploads/Originals/2023/11/22/638362929279006187_game-naruto_.jpg">
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <div class="main2">
+                    <div class="container">
+                        <h2 class="fw-bold mt-4">Chăm sóc xe</h2>
+                        <div class="row">
+                            <% results.forEach(element=> { %>
+                                <div class="col-sm-3">
+                                   
+                                        <div class="card" style="width: 18rem;">
+                                            <img class="card-img-top" src="<%= element.img %>" alt="Card image cap">
+                                            <div class="card-body">
+                                                <h5 class="card-title">
+                                                    <%= element.name %>
+                                                </h5>
+                                                <p class="card-text">
+                                                    <%= element.destributed %>
+                                                </p>
+                                                <h5 class="card-title fw-bold">
+                                                    <%= element.price %> VND
+                                                </h5>
+                                                <a href="purchase/{{ this._id }}" class="btn btn-primary">Mua</a>
+                                            </div>
+                                        </div>
+                                       
+                                </div>
+                                <% }); %>
+                            </div>
+
+                            <!-- <div class="col-sm-4">
+                                <img id="click-here"
+                                    src="https://fptshop.com.vn/Uploads/Originals/2023/11/22/638362929279006187_game-naruto_.jpg">
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section>
+                <div class="main3">
+                    <div class="container">
+                        <h2 class="fw-bold mt-3">Ảnh xe đẹp tại Thanh Hậu
+                            <span id="logo">Motocare</span>
+                        </h2>
+                        <hr>
+                        <div class="row">
+                            <% results.forEach(element=> { %>
+                                <div class="card" style="width: 18rem;">
+                                    <img class="card-img-top" src="<%= element.img %>" alt="Card image cap">
+                                    <div class="card-body">
+                                        <h5 class="card-title">
+                                            <%= element.name %>
+                                        </h5>
+                                        <p class="card-text">
+                                            <%= element.destributed %>
+                                        </p>
+                                        <h5 class="card-title fw-bold">
+                                            <%= element.price %> VND
+                                        </h5>
+                                        <a href="purchase/{{ this._id }}" class="btn btn-primary">Mua</a>
+                                    </div>
+                                </div>
+                                <% }); %>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div class="footer-main">
+            <footer class="footer">
+                <div class="footer2">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h4 class="fw-bold">Liên hệ</h4>
+                                <p>
+                                    <span class="fw-bold">Điện thoại:</span> 086 270 1467 <br>
+                                    <span class="fw-bold">Email:</span> Trannguyenthanhhaupro09@gmail.com <br>
+
+                                </p>
+                            </div>
+                            <div class="col-sm-3">
+                                <h4 class="fw-bold">Về chúng tôi</h4>
+                                <p>
+                                    Thanh Hậu Mottocare hoạt động tập trung vào mảng chăm sóc và đồ chơi cho mọi loại xe
+                                    hai bánh.
+                                    Phương châm làm việc cũng như kinh doanh của chúng tôi luôn hướng đến uy tín và làm
+                                    hài lòng
+                                    khách hàng.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="footer3">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-4"></div>
+                            <div class="col-sm-4">
+                                <p style="color:rgb(117, 117, 117)">© Copyright by Thanhhau Motorcare</p>
+                            </div>
+                            <div class="col-sm-4"></div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

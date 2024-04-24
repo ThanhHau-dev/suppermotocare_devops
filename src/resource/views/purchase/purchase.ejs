@@ -1,0 +1,246 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="/3rd/bootstrap-icons-1.11.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="/css/app.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="app">
+        <div class="nav-main ">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <a class="navbar-brand" href="/">Motto Care</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse"
+                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Danh mục sản phẩm
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="purchase?type=nhot">Nhớt & dung dịch</a>
+                                <a class="dropdown-item" href="purchase?type=dts">Đồ chơi xe</a>
+                                <a class="dropdown-item" href="purchase?type=balo">Phụ kiện</a>
+                            </div>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Liên hệ</a>
+                        </li>
+                    </ul>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav ml-auto">
+                            <form class="form-inline my-2 my-lg-0 ml-auto" action="/search" method="post">
+                                <input class="form-control mr-sm-2" type="search" placeholder="Search"
+                                    name="search_product" aria-label="Search">
+                                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                            </form>
+                            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                                <div class="dropdown">
+                                    <% if (!user) { %>
+                                        <div>
+                                            <a class="dropdown-item btn btn-outline-success" role="button"
+                                                href="/account/login">Log in</a>
+                                        </div>
+                                        <% } else { %>
+                                            <% if (user.admin) {%>
+                                                <div class="dropdown">
+                                                    <li class="nav-item dropdown">
+                                                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+                                                            role="button" data-toggle="dropdown" aria-haspopup="true"
+                                                            aria-expanded="false">
+                                                            Hi, <%= user.username %>
+                                                        </a>
+                                                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                                            <div id="author">
+                                                                <a class="dropdown-item"
+                                                                    href="/product/create">Create</a>
+                                                                <a class="dropdown-item" href="/me/stored/product">My
+                                                                    Product</a>
+                                                            </div>
+                                                            <div class="dropdown-divider"></div>
+                                                            <a class="dropdown-item" href="/account/logout">Log out</a>
+                                                        </div>
+                                                    </li>
+                                                </div>
+                                                <% } else { %>
+                                                    <li class="nav-item dropdown">
+                                                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+                                                            role="button" data-toggle="dropdown" aria-haspopup="true"
+                                                            aria-expanded="false">
+                                                            Hi, <%= user.username %>
+                                                        </a>
+                                                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                                            <div id="author">
+                                                                <a class="dropdown-item" href="/purchase/cart">Cart</a>
+                                                            </div>
+                                                            <div class="dropdown-divider"></div>
+                                                            <a class="dropdown-item" href="/account/logout">Log out</a>
+                                                        </div>
+                                                    </li>
+                                                    <% } %>
+                                                        <% } %>
+                                </div>
+                        </ul>
+                    </div>
+                    </ul>
+                </div>
+        </div>
+        </nav>
+    </div>
+
+    <div class="container mt-5">
+        <section>
+            <div class="main mt-5">
+                <div class="container">
+                    <div class="row">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Ảnh sản phẩm</th>
+                                    <th scope="col">Tên sản phẩm</th>
+                                    <th scope="col">Đơn giá</th>
+                                    <th scope="col">Số lượng</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><img src="<%= results.img %>"></td>
+                                    <td>
+                                        <%= results.name %>
+                                    </td>
+                                    <td>
+                                        <%= results.price %> VNĐ
+                                    </td>
+                                    <td>
+                                        <div id="buy-amount">
+                                            <button class="minus-btn" id="btn_minus">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                    stroke-width="2" stroke="currentColor" class="w-6 h-6">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14" />
+                                                </svg>
+
+                                            </button>
+
+                                            <input type="text" name="amount" id="amount" value="1">
+
+                                            <button class="plus-btn" id="btn_plus">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                    stroke-width="2" stroke="currentColor" class="w-6 h-6">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        d="M12 4.5v15m7.5-7.5h-15" />
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <button class="btn_main" id="btnAddProduct">
+                                            THEM VAO GIO HANG
+                                        </button>
+                                        <button class="btn_shopping">Thanh Toan Ngay</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <form method="GET" name="formAddProductInCart"></form>
+    <div class="footer-main mt-5">
+        <footer class="footer">
+            <div class="footer2">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h4 class="fw-bold">Liên hệ</h4>
+                            <p>
+                                <span class="fw-bold">Điện thoại:</span> 086 270 1467 <br>
+                                <span class="fw-bold">Email:</span> Trannguyenthanhhaupro09@gmail.com <br>
+
+                            </p>
+                        </div>
+                        <div class="col-sm-3">
+                            <h4 class="fw-bold">Về chúng tôi</h4>
+                            <p>
+                                Thanh Hậu Mottocare hoạt động tập trung vào mảng chăm sóc và đồ chơi cho mọi loại xe
+                                hai bánh.
+                                Phương châm làm việc cũng như kinh doanh của chúng tôi luôn hướng đến uy tín và làm
+                                hài lòng
+                                khách hàng.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer3">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-4"></div>
+                        <div class="col-sm-4">
+                            <p style="color:rgb(117, 117, 117)">© Copyright by Thanhhau Motorcare</p>
+                        </div>
+                        <div class="col-sm-4"></div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+            var amountElement = document.getElementById('amount');
+            var amount = amountElement.value;
+
+            $('#btn_plus').click(function (e) {
+                amount++;
+                amountElement.value = amount;
+            })
+
+            $('#btn_minus').click(function (e) {
+                if (amount > 1) {
+                    amount--;
+                }
+                amountElement.value = amount;
+            })
+
+            $('#btnAddProduct').click(function (e) {
+                e.preventDefault();
+
+                document.forms["formAddProductInCart"].action = "/purchase/list-purchase/add-product/<%= results._id %>/" + amount;
+                document.forms["formAddProductInCart"].submit();
+            })
+
+            amountElement.addEventListener('input', () => {
+                amount = amountElement.value;
+                amount = parseInt(amount);
+                amount = (isNaN(amount) || amount == 0) ? 1 : amount;
+                amountElement.value = amount;
+            })
+        })
+    </script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
